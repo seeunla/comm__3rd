@@ -2,6 +2,7 @@ package com.ll.exam.article;
 
 import com.ll.exam.annotation.Controller;
 import com.ll.exam.Ut;
+import com.ll.exam.annotation.Service;
 import com.ll.exam.article.ArticleController;
 import com.ll.exam.home.HomeController;
 import javassist.tools.reflect.Reflection;
@@ -18,7 +19,22 @@ public class Container {
 
     static {
         objects = new HashMap<>();
+        scanComponents();
+    }
 
+    private static void scanComponents() {
+        scanServices();
+        scanControllers();
+    }
+
+    private static void scanServices() {
+        Reflections ref = new Reflections("com.ll.exam");
+        for (Class<?> cls : ref.getTypesAnnotatedWith(Service.class)) {
+            objects.put(cls, Ut.cls.newObj(cls, null));
+        }
+    }
+
+    private static void scanControllers() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> cls : ref.getTypesAnnotatedWith(Controller.class)) {
             objects.put(cls, Ut.cls.newObj(cls, null));
