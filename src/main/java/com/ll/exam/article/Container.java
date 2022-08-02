@@ -3,6 +3,7 @@ package com.ll.exam.article;
 import com.ll.exam.annotation.Controller;
 import com.ll.exam.Ut;
 import com.ll.exam.article.ArticleController;
+import com.ll.exam.home.HomeController;
 import javassist.tools.reflect.Reflection;
 import org.reflections.Reflections;
 
@@ -11,12 +12,21 @@ import java.util.List;
 
 public class Container {
     private static final ArticleController articleController;
+    private static final HomeController homeController;
+
     static {
         articleController = new ArticleController();
+        homeController = new HomeController();
+
     }
     public static ArticleController getArticleController() {
         return articleController;
     }
+
+    public static HomeController getHomeController() {
+        return homeController;
+    }
+
 
     public static List<String> getControllerNames() {
         List<String> names = new ArrayList<>();
